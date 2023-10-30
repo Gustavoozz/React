@@ -1,0 +1,48 @@
+.button {
+    display: block;
+    width: 300px;
+    height: 40px;
+    text-align: center; 
+    margin-bottom: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 700;
+
+    border: 1px solid black;
+    border-radius: 10px;  
+    cursor: pointer;
+    border: none;
+}
+
+/* Quando passar o mouse ( hover ): */
+.button:hover {
+    opacity: .8;
+}
+
+
+.button--warning {
+    background-color: yellow;
+    color: black;
+} 
+
+
+.button--danger {
+    background-color: red;
+    color: white;
+} 
+
+
+.button--success {
+    background-color: green;
+    color: white;
+} 
+
+.button--big {
+    width: 100%;
+    background-color: blue;
+    color: white;
+}
+
+.button--middle {
+    width: 50%;
+    background-color: purple;
+}
