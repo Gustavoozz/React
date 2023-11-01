@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './Components/Header/Header';
 
 // Import dos componentes da página:
 import HomePage from './Pages/HomePage/HomePage';
@@ -12,6 +13,7 @@ const Rotas = () => {
     return (
         <div>
             <BrowserRouter>
+            <Header />
             <Routes>
                 <Route element= {<HomePage />} path='/' exact />
                 <Route element= {<TipoEventosPage />} path='/tipo-evento' />
