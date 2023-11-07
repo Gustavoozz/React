@@ -2,13 +2,17 @@ import React from 'react';
 import './Nav.css'
 import { Link } from 'react-router-dom';
 
-import logoDesktop from "../../assets/icons/logo-pink.svg";
-import logoMobile from '../../assets/images/logo-white.svg'
+import logoDesktop from "../../assets/images/logo-pink.svg";
+import logoMobile from "../../assets/images/logo-white.svg";
 
-const Nav = () => {
+
+const Nav = ( { setExibeNavbar, exibeNavbar } ) => {
     return (
-        <nav className='navbar'>
-            <span className="navbar__close">X</span>
+        <nav className={`navbar ${ exibeNavbar ? "exibeNavbar" : "" }`}>
+            <span className="navbar__close" onClick={() => setExibeNavbar(false)}>
+                X
+            </span>
+
             <Link to="/">
                 <img 
                 className='eventlogo__logo-image'
@@ -17,10 +21,10 @@ const Nav = () => {
             </Link>
 
             <div className='navbar__items-box'>
-                <Link to="/">Home</Link>
-                <Link to="/tipo-eventos">Tipo eventos</Link>
-                <Link to="/eventos">Eventos</Link>
-                <Link to="/login">Login</Link>
+                <Link to="/" className='navbar__item'>Home</Link>
+                <Link to="/tipo-eventos" className='navbar__item'>Tipo eventos</Link>
+                <Link to="/eventos" className='navbar__item'>Eventos</Link>
+                <Link to="/login" className='navbar__item'>Login</Link>
             </div>
         </nav>
     );
