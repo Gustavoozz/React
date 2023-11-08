@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
 
 // Import dos componentes da página:
 import HomePage from './Pages/HomePage/HomePage';
@@ -21,6 +22,7 @@ const Rotas = () => {
                 <Route element= {<LoginPage />} path='/login' />
                 <Route element= {<TestePage />} path='/testes' />
             </Routes>
+            <Footer />
             </BrowserRouter>
         </div>
     );

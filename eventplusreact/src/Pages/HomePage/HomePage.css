@@ -1,33 +1,21 @@
-@font-face {
-    font-family: Poppins-Regular;
-    src: url(./assets/fonts/Poppins/Poppins-Regular.ttf);
-  }
+
+.events-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  margin-top: 50px;
+  /* padding: 40px 0 20px 0; */
+}
+
+/* --color-blue-red: #511948; */
+
+@media screen and (min-width: 992px) {
   
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+  .events-box {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 50px 0;
   }
-  
-  body {
-    font-family: 'Poppins-Regular','Courier New', Courier, monospace;
-  }
-  
-  :root {
-    /* Variáveis de tema */
-    
-    /* smartphone */
-    --color-white: #fff;
-    --color-dark-blue: #201849;
-    --color-blue-red: #511948;
-    --color-medium-red: #821B47;
-    --color-red: #B51D44;
-    --text-color: #000;
-    
-    /* desktop */
-  
-  }
-  /* main {
-    border: 1px solid green;
-    margin-top: 55px;
-  } */
+}
