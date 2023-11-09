@@ -77,6 +77,16 @@
     border-bottom: 2px solid #201849;
 }
 
+/* When you hover: */
+.navbar__item:hover {
+    opacity: .9;
+    transition: 0.5s;
+    transform: scale(0.9);
+}
+
+.navbar__item:active {
+    color: #B51D44;
+}
 
 /* Desktop */
 @media screen and (min-width: 992px) {

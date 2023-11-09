@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './HomePage.css'
 import Title from '../../Components/Title/Title';
 import MainContent from '../../Components/MainContent/MainContent';
@@ -7,8 +7,27 @@ import VisionSection from '../../Components/VisionSection/VisionSection';
 import ContactSection from '../../Components/ContactSection/ContactSection';
 import NextEvent from '../../Components/NextEvent/NextEvent';
 import Container from '../../Components/Container/Container'
+import axios from 'axios';
 
 const HomePage = () => {
+    useEffect(() =>{
+        // Chamar a API:
+        async function getNextEvents() {
+            try {
+            const promise = await axios.get("https://localhost:7118/swagger/index.html"); 
+            
+            console.log(promise.data);
+            setNextEvents(promise.data)
+
+            } catch (error) {
+              alert('Erro!')  
+            }
+        }
+    }, []);
+
+    // Fake mock - API mocada:
+    const [nextEvents, setNextEvents] = useState([]);
+
     return (
        <MainContent>
         <Banner />
@@ -20,33 +39,18 @@ const HomePage = () => {
         <Title titleText={'Proximos eventos'}/>
         <div className='events-box'>
 
-        <NextEvent 
-        title={"Evento de Dev"}
-        description={"Evento massa."}
-        eventDate={"17/02/2024"}
-        idEvento={"34535GFE57"}
-        />
-
-        <NextEvent 
-        title={"Evento de Dev"}
-        description={"Evento massa."}
-        eventDate={"17/02/2024"}
-        idEvento={"34535GFE57"}
-        />
-
-        <NextEvent 
-        title={"Evento de Dev"}
-        description={"Evento massa."}
-        eventDate={"17/02/2024"}
-        idEvento={"34535GFE57"}
-        />
-
-        <NextEvent 
-        title={"Evento de Dev"}
-        description={"Evento massa."}
-        eventDate={"17/02/2024"}
-        idEvento={"34535GFE57"}
-        />
+        {
+            nextEvents.map((e) => {
+                return(
+                <NextEvent 
+                  title={e.title}
+                  description={e.descricao}
+                  eventDate={e.data}
+                  idEvento={e.id}
+                />
+                );
+            })
+        }
 
         </div>
         </Container>
