@@ -8,21 +8,29 @@ import ContactSection from '../../Components/ContactSection/ContactSection';
 import NextEvent from '../../Components/NextEvent/NextEvent';
 import Container from '../../Components/Container/Container'
 import axios from 'axios';
+import api from '../../Services/Service'
+
+import { Swiper } from "swiper/react";
+import { Pagination, Navigation } from "swiper/react";
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 const HomePage = () => {
     useEffect(() =>{
         // Chamar a API:
-        async function getNextEvents() {
+        async function getProximosEventos() {
             try {
-            const promise = await axios.get("https://localhost:7118/swagger/index.html"); 
+            const promise = await api.get("/Evento/ListarProximos"); 
             
-            console.log(promise.data);
+            
             setNextEvents(promise.data)
 
             } catch (error) {
               alert('Erro!')  
             }
         }
+        getProximosEventos();
+        console.log("A home foi gerada.")
     }, []);
 
     // Fake mock - API mocada:
@@ -43,10 +51,10 @@ const HomePage = () => {
             nextEvents.map((e) => {
                 return(
                 <NextEvent 
-                  title={e.title}
+                  title={e.nomeEvento}
                   description={e.descricao}
-                  eventDate={e.data}
-                  idEvento={e.id}
+                  eventDate={e.dataEvento}
+                  idEvento={e.idEvento}
                 />
                 );
             })

@@ -10,7 +10,7 @@
 }
 
 
-.tootip {
+.tooltip {
     color: #fff !important;
     background-color: #B51D44 !important;
   }
@@ -67,6 +67,10 @@
   color: darkred;
 }
 
+.swiper {
+  width: 600px;
+  height: 300px;
+}
 
 @media screen and (min-width: 992px) {
     .banner {
