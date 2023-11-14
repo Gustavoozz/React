@@ -10,10 +10,10 @@ import Container from '../../Components/Container/Container'
 import axios from 'axios';
 import api from '../../Services/Service'
 
-import { Swiper } from "swiper/react";
-import { Pagination, Navigation } from "swiper/react";
-import 'swiper/css';
-import 'swiper/css/pagination';
+// import { Swiper } from "swiper/react";
+// import { Pagination, Navigation } from "swiper/react";
+// import 'swiper/css';
+// import 'swiper/css/pagination';
 
 const HomePage = () => {
     useEffect(() =>{

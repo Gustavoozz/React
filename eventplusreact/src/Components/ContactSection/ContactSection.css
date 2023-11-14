@@ -19,7 +19,6 @@
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    margin-top: 100px;
   }
   
   .contato__endereco {
@@ -29,6 +28,11 @@
     line-height: 50px;
   }
   
+.contato__img-map {
+  width: 500px;
+  height: 500px;
+}
+
   .contato__telefone {
     font-family: Poppins-Regular;
     font-size: 0.875rem;

@@ -3,7 +3,7 @@ import './ContactSection.css'
 import Title from '../Title/Title';
 
 // Import de imagem:
-import contatoMap from '../../assets/images/contato-map.png'
+import contatoMap from '../../assets/images/ezgif.com-video-to-gif.gif'
 
 const ContactSection = () => {
     return (

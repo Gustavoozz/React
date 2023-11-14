@@ -1,7 +1,6 @@
 import React from 'react';
 import './NextEvent.css'
 import { dateFormatDbToView } from '../../Utils/stringFunction'; 
-
 import { Tooltip } from 'react-tooltip'
 
 import Swiper from 'swiper';

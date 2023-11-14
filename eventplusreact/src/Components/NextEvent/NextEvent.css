@@ -29,6 +29,12 @@
     /* box-shadow: 1px 1px rgb(215, 215, 215); */
 }
 
+/* .event-card:hover {
+  opacity: 1.0;
+  transition: 0.9s;
+  transform: scale(1.1);
+} */
+
 .event-card::-webkit-scrollbar {
   width: 0px;
 }
