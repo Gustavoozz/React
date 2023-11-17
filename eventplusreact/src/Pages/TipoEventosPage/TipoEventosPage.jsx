@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TipoEventosPage.css';
 import Title from '../../Components/Title/Title';
 import MainContent from '../../Components/MainContent/MainContent'
@@ -12,17 +12,28 @@ import { Button } from "../../Components/FormComponents/FormComponents";
 import api from "../../Services/Service";
 
 import TableTp from "./TableTp/TableTp";
+import Notification from "../../Components/Notification/Notification";
 
 
 const TipoEventosPage = () => {
 
     const [frmEdit, setFrmEdit] = useState(false);
     const [titulo, setTitulo] = useState("");
-    const [tipoEventos, setTipoEventos] = useState([
-        { idTipoEvento: "123", titulo: "Evento 1" },
-        { idTipoEvento: "321", titulo: "Evento 2" },
-        { idTipoEvento: "456", titulo: "Evento 3" }
-    ]); // Array.
+    const [tipoEventos, setTipoEventos] = useState([]); // Array.
+    const [notifyUser, setNotifyUser] = useState({}); // Array.
+
+    useEffect(() => {
+        async function loadTypes() {
+            try {
+                const retorno = await api.get("/TiposEvento");
+                setTipoEventos(retorno.data)
+            } catch(error) {
+                console.log("Erro na API");
+                console.log(error);
+            }
+        }
+        loadTypes();
+    }, []);
 
    async function handleSubmit(e) {
         // Parar o submit do formulário.
@@ -36,7 +47,17 @@ const TipoEventosPage = () => {
 
         // Chamar a API
         try {
-          const retorno = await api.post("/TiposEvento", {titulo: titulo});
+          const retorno = await api.post("/TiposEvento", {titulo:titulo});
+
+          setNotifyUser({
+            titleNote: "Sucesso",
+            textNote: `Cadastrado com sucesso!`,
+            imgIcon: "success",
+            imgAlt:
+              "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+            showMessage: true,
+          });
+
           console.log("Cadastrado com sucesso!");           
           console.log(retorno.data);
           
@@ -49,9 +70,27 @@ const TipoEventosPage = () => {
     }
 
 
-    function handleDelete() {
-        alert('Bola la apagar na api')
-    }
+    async function handleDelete(idTipoEvento) {    
+        try {
+            const retorno = await api.delete(`/TiposEvento/${idTipoEvento}`);
+
+            setNotifyUser({
+                titleNote: "Sucesso",
+                textNote: `Deletado com sucesso!`,
+                imgIcon: "success",
+                imgAlt:
+                  "Imagem de ilustração de sucesso. Moça segurando um balão com símbolo de confirmação ok.",
+                showMessage: true,
+              });
+            const retornoGet = await api.get('/TiposEvento')
+            setTipoEventos(retornoGet.data)
+    
+            
+          } catch (error) {
+            console.log("Erro ao deletar o elemento selecionado...");
+          }
+       }
+
 
     // ATUALIZAÇÃO DOS DADOS:
     function showUpdateForm() {
@@ -69,6 +108,7 @@ const TipoEventosPage = () => {
 
     return (
         <MainContent>
+            <Notification {...notifyUser} setNotifyUser={setNotifyUser}/>
             {/* CADASTRO DE TIPO DE EVENTO */}
             <section className='cadastro-evento-section'>
 

@@ -10,10 +10,7 @@ import Container from '../../Components/Container/Container'
 import axios from 'axios';
 import api from '../../Services/Service'
 
-// import { Swiper } from "swiper/react";
-// import { Pagination, Navigation } from "swiper/react";
-// import 'swiper/css';
-// import 'swiper/css/pagination';
+import Swiper from '../../Components/Swiper/Swiper'
 
 const HomePage = () => {
     useEffect(() =>{
@@ -32,6 +29,7 @@ const HomePage = () => {
         getProximosEventos();
         console.log("A home foi gerada.")
     }, []);
+
 
     // Fake mock - API mocada:
     const [nextEvents, setNextEvents] = useState([]);

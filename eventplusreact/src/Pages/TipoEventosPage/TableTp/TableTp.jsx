@@ -30,7 +30,7 @@ const TableTp = ( { dados, fnUpdate, fnDelete } ) => {
             src={editPen} 
             alt="" 
             onClick={() => {
-                fnUpdate();
+                fnUpdate(e.idTipoEvento);
             }}/>
           </td>
 
@@ -39,7 +39,7 @@ const TableTp = ( { dados, fnUpdate, fnDelete } ) => {
             src={trashDelete} 
             alt="" 
             onClick={() => {
-                fnDelete();
+                fnDelete(e.idTipoEvento);
             }}/>
           </td>
         </tr>

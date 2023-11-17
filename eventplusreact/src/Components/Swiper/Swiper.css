@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: white;
+}
+
+.swiper-container {
+    height: 80vh;
+}
+
+.slide-item {
+    margin: 10px;
+}
+
+.swiper-pagination > .swiper-pagination-bullet {
+    background-color: black;
+    opacity: 0.7;
+    color: white;
+    padding: 8px;
+    border-radius: 0;
+}
+
+.swiper-pagination > .swiper-pagination-bullet-active {
+    background-color: white;
+    opacity: 1;
+    padding: 8px;
+    border-radius: 0;
+}
+
+.swiper-button-prev::after, .swipper-button-next::after {
+    color: white;
+}
