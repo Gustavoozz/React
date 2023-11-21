@@ -73,9 +73,9 @@
   color: darkred;
 }
 
-.swiper {
-  width: 600px;
-  height: 300px;
+.slide-container {
+  width: 100%;
+  color: #821B47;
 }
 
 @media screen and (min-width: 992px) {

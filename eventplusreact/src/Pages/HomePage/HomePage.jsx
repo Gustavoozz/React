@@ -10,7 +10,7 @@ import Container from '../../Components/Container/Container'
 import axios from 'axios';
 import api from '../../Services/Service'
 
-import Swiper from '../../Components/Swiper/Swiper'
+
 
 const HomePage = () => {
     useEffect(() =>{

@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './NextEvent.css'
 import { dateFormatDbToView } from '../../Utils/stringFunction'; 
 import { Tooltip } from 'react-tooltip'
 
-import Swiper from '../Swiper/Swiper'
+import 'swiper/swiper-bundle.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import { register } from 'swiper/element/bundle'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
-const NextEvent = ( {title, description, eventDate, idEvento} ) => {
+
+const NextEvent = ( {title, description, eventDate, idEvento, data} ) => {
+    register();
+    const [slidesPerView, setSlidePerView] = useState(2);
 
     function conectar(idEvento) {
         alert(`Conectado ao evento: ${idEvento}`)
     }
 
     return (
+        // <Swiper
+        // >
+        // {data.map((item) =>
+        //  <SwiperSlide key={item.id}>
+                
         <article className='event-card'>
             <h2 className='event-card__title'>{title}</h2>
 
@@ -31,6 +45,11 @@ const NextEvent = ( {title, description, eventDate, idEvento} ) => {
             <a onClick={() => {conectar(idEvento)}} className='event-card__connect-link' href="">Conectar</a>
            
         </article>
+        // </SwiperSlide>
+        
+        // )}
+           
+        // </Swiper>
     );
 };
 
