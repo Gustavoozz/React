@@ -21,13 +21,14 @@ const TipoEventosPage = () => {
     const [frmEdit, setFrmEdit] = useState(false);
     const [titulo, setTitulo] = useState("");
     const [idEvento, setIdEvento] = useState(null);
+    
     const [tipoEventos, setTipoEventos] = useState([]); // Array.
-    const [notifyUser, setNotifyUser] = useState({}); // Array.
+    const [notifyUser, setNotifyUser] = useState(); 
     const [showSpinner, setShowSpinner] = useState(false);
 
     // Ao carregar a página:
     useEffect(() => {
-        async function loadTypes() {
+        async function loadTypes() {    
             setShowSpinner(true);
             try {
                 const retorno = await api.get("/TiposEvento");
