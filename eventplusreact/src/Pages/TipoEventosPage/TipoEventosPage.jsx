@@ -77,9 +77,9 @@ const TipoEventosPage = () => {
             showMessage: true,
           });
 
-          console.log("Cadastrado com sucesso!");           
-          console.log(retorno.data);
-          
+          const buscaEventos = await api.get("/TiposEvento");         
+          setTipoEventos(buscaEventos.data);
+
           setTitulo("") // Limpa a variavel.
 
         } catch (error) {

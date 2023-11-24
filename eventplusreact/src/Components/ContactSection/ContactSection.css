@@ -29,7 +29,11 @@
     line-height: 50px;
   }
   
-
+  .contato__img-map:hover {
+    opacity: 1.0;
+  transition: 0.9s;
+  transform: scale(1.1);
+}
 
   .contato__telefone {
     font-family: Poppins-Regular;

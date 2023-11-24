@@ -1,6 +1,8 @@
 import React from 'react';
-import './TableEv.css'
+import './TableEv.css';
+import { dateFormatDbToView } from '../../../Utils/stringFunction'
 
+// Import dos ícones:
 import editPen from '../../../assets/images/edit-pen.svg'
 import trashDelete from '../../../assets/images/trash-delete.svg'
 
@@ -35,7 +37,7 @@ return (
       {e.tiposEvento.titulo}
     </td>
     <td className="table-data__data table-data__data--big">
-      {e.dataEvento}
+      {dateFormatDbToView(e.dataEvento)}
     </td>
     <td className="table-data__data table-data__data--big">
       {e.instituicao.nomeFantasia}
@@ -61,7 +63,7 @@ return (
       src={trashDelete} 
       alt="" 
       onClick={() => {
-        fnDelete(e.idEvento);
+        fnDelete(e);
     }}/>
     </td>
   </tr>
