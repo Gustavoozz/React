@@ -161,7 +161,8 @@ const EventosPage = () => {
       
       console.log(retorno);
       if (retorno.status === 204) {
-        notify("Evento atualizado com sucesso");
+        alert("Evento atualizado com sucesso");
+        
         const retorno = await api.get("/Evento");
         setEvents(retorno.data);
 
