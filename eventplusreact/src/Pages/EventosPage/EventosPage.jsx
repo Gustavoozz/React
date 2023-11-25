@@ -120,21 +120,27 @@ const EventosPage = () => {
 
   async function showUpdateForm(idEvento) {
 
-    setFrmEdit(true)
-
-    try {
-      // Get para pegar os dados.
-      const retorno = await api.get(`/Evento/${idEvento}`);
-
-      // Preencher o titulo e o id no state.
-      setNomeEvento(retorno.data.nomeEvento);
-      setDescricao(retorno.data.descricao);
-      setIdTipoEvento(retorno.data.idTipoEvento);
-      setData(retorno.data.dataEvento);
-    } catch (error) {
-
-    }
     setFrmEdit(true);
+    setIdEvento(idEvento);
+
+    setShowSpinner(true);
+    try {
+      const searchEvent = await api.get(`/Evento/${idEvento}`,
+        idEvento
+      );
+      setNomeEvento(searchEvent.data.nomeEvento);
+
+      setDescricao(searchEvent.data.descricao);
+
+      setData(searchEvent.data.dataEvento);
+
+      setIdTipoEvento(searchEvent.data.idTipoEvento);
+
+    } catch (error) {
+      alert("Erro");
+    }
+    setShowSpinner(false);
+  }
   }
 
 
@@ -145,40 +151,26 @@ const EventosPage = () => {
     e.preventDefault();
     setShowSpinner(true);
     try {
-        // Requisição PUT para atualizar o evento
-        const retorno = await api.put("/Evento/" + idEvento, {
-            nomeEvento: titulo,
-            idTipoEvento: selectTipoEvento,
-            dataEvento: data,
-            descricao: descricao,
-            idInstituicao: instituicao
-        });
+      const retorno = await api.put(`/Evento/${idEvento}`, {
+        dataEvento: data,
+        nomeEvento: nomeEvento,
+        descricao: descricao,
+        idTipoEvento: idTipoEvento,
+        idInstituicao: instituicao,
+      });
+      
+      console.log(retorno);
+      if (retorno.status === 204) {
+        notify("Evento atualizado com sucesso");
+        const retorno = await api.get("/Evento");
+        setEvents(retorno.data);
 
-        // Notificação de sucesso
-        if (retorno.status === 204) {
-            setNotifyUser({
-                titleNote: "Sucesso",
-                textNote: "Evento atualizado com sucesso",
-                imgIcon: "success",
-                imgAlt: "Ilustração de sucesso. Moça em frente a um símbolo de exclamação.",
-                showMessage: true
-            });
-        }
-        editActionAbort(true)
+        editActionAbort();
 
-        // Atualização da lista de eventos
-        const searchEvents = await api.get("/Evento");
-        setEvents(searchEvents.data);
-        
+        loadEvents();
+      }
     } catch (error) {
-        // Notificação de erro
-        setNotifyUser({
-            titleNote: "Erro",
-            textNote: "Não foi possível atualizar o evento",
-            imgIcon: "danger",
-            imgAlt: "Ilustração de erro. Moço em frente a um símbolo X se referindo a um erro.",
-            showMessage: true
-        });
+      alert("Erro ao atualizar");
     }
     setShowSpinner(false);
 }
@@ -384,6 +376,6 @@ function editActionAbort() {
       </MainContent>
     </>
   );
-};
+
 
 export default EventosPage;
