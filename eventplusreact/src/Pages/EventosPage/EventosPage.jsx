@@ -24,6 +24,7 @@ const EventosPage = () => {
   const [nomeEvento, setNomeEvento] = useState("");
   const [descricao, setDescricao] = useState("");
   const [data, setData] = useState("");
+  
   const [dataEvento, setDataEvento] = useState("");
   const [instituicao, setInstituicao] = useState("68a03bdf-54fe-40b3-9c32-0fdbcfbc3be4");
   const [tipoEvento, setTipoEvento] = useState([]);
