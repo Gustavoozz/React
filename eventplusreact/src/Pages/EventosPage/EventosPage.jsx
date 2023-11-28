@@ -142,7 +142,7 @@ const EventosPage = () => {
     }
     setShowSpinner(false);
   }
-  }
+  
 
 
 
@@ -160,7 +160,6 @@ const EventosPage = () => {
         idInstituicao: instituicao,
       });
       
-      console.log(retorno);
       if (retorno.status === 204) {
         alert("Evento atualizado com sucesso");
         
@@ -169,7 +168,7 @@ const EventosPage = () => {
 
         editActionAbort();
 
-        loadEvents();
+
       }
     } catch (error) {
       alert("Erro ao atualizar");
@@ -219,10 +218,10 @@ function editActionAbort() {
 
 
   return (
-    <>
-      <MainContent>
+    <>  
         <Notification {...notifyUser} setNotifyUser={setNotifyUser} />
         {showSpinner ? <Spinner /> : null}
+        <MainContent>
 
         <section className="cadastro-evento-section">
           <Container>
@@ -378,6 +377,7 @@ function editActionAbort() {
       </MainContent>
     </>
   );
+}
 
 
 export default EventosPage;
