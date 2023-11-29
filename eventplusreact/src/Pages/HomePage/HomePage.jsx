@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './HomePage.css'
 import Title from '../../Components/Title/Title';
 import MainContent from '../../Components/MainContent/MainContent';
@@ -9,11 +9,17 @@ import NextEvent from '../../Components/NextEvent/NextEvent';
 import Container from '../../Components/Container/Container'
 import axios from 'axios';
 import api from '../../Services/Service'
+import { UserContext } from '../../context/AuthContext';
 
 
 
 const HomePage = () => {
-    useEffect(() =>{
+const {userData} = useContext(UserContext)
+
+console.log("Dados");
+console.log(userData);
+
+    useEffect(() => {
         // Chamar a API:
         async function getProximosEventos() {
             try {

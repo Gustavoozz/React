@@ -1,11 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
-import { Routes } from 'react-router-dom';
 import Rotas from './Rotas'
+import { UserContext } from './context/AuthContext';
+import { useState } from 'react';
 
 function App() {
+  const [userData, setUserData] = useState({})
   return (
+    <UserContext.Provider value={{userData, setUserData}}>
     <Rotas />
+    </UserContext.Provider>
   );
 }
 
