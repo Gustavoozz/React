@@ -44,32 +44,30 @@ export const Button = ({textButton, id, name, type, additionalClass = "", manipu
 
 
 export const Select = ({
-    option = [],
-    name,
-    id,
     required,
-    additionalClass,
-    manipulationFunction = "",
+    id,
+    name,
+    options,
+    manipulationFunction,
+    additionalClass = "",
     defaultValue
-
-}) => {
+ }) => {
     return (
-        <select
-            name={name}
-            id={id}
-            required={required}
-            className={`input-component ${additionalClass}`}
-            onChange={manipulationFunction}
-            value={defaultValue}
-        >
-            <option value="">Selecione</option>
-            {option.map((opt) => {
-                return (
-                    <option key={opt.idTipoEvento} value={opt.idTipoEvento}>{opt.titulo}</option>
-                )
-
-            })}
-        </select>
-
-    );
-}
+<select 
+name={name} 
+id={id}
+required={required}
+className={`input-component ${additionalClass}`}
+onChange={manipulationFunction}
+value={defaultValue}
+>
+    {/* <option value="">Selecione</option> */}
+    <option>Selecione</option>
+     {options.map((o) => {
+        return (
+            <option key={Math.random()} value={o.value}>{o.text}</option>
+        )
+     })}
+</select>
+    )
+ }

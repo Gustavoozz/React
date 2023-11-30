@@ -185,7 +185,7 @@ const TipoEventosPage = () => {
 
             <Container>
             <div className='cadastro-evento__box'>
-            <Title titleText={'Página de tipos de eventos'}/>
+            <Title titleText={'Cadastro de tipos de eventos'}/>
             <ImageIllustrator 
             alterText={""}
             imageRender={eventTypeImage}
@@ -214,7 +214,7 @@ const TipoEventosPage = () => {
                 /> 
                 
 
-                <span>{titulo}</span>
+            
 
                 <Button 
                 type={"submit"}
@@ -272,7 +272,7 @@ const TipoEventosPage = () => {
             {/* LISTAGEM DE TIPO DE EVENTO */}
             <section className="lista-eventos-section">
                 <Container>
-                    <Title titleText={"Lista Tipo de Eventos"} color="white"/>
+                    <Title titleText={"Tipos de Eventos"} color="white"/>
                     
                     <TableTp 
                     dados={tipoEventos}

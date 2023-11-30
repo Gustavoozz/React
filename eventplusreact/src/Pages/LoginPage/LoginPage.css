@@ -19,6 +19,7 @@
     align-items: center;
     /* border: 1px solid green; */
   }
+
   .frm-login__formbox {
     max-width: 350px;
     width: 100%;
@@ -29,6 +30,7 @@
     justify-content: center;
     align-items: center;
   }
+
   .frm-login {
     width: 100%;
     height: 90vh;
@@ -39,6 +41,7 @@
     align-items: center;
     /* border: 1px solid green; */
   }
+  
   .login {
     display: flex;
     justify-content: center;

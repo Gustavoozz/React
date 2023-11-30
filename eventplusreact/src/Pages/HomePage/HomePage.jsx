@@ -1,23 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './HomePage.css'
 import Title from '../../Components/Title/Title';
+
 import MainContent from '../../Components/MainContent/MainContent';
 import Banner from '../../Components/Banner/Banner'
 import VisionSection from '../../Components/VisionSection/VisionSection';
+
 import ContactSection from '../../Components/ContactSection/ContactSection';
 import NextEvent from '../../Components/NextEvent/NextEvent';
 import Container from '../../Components/Container/Container'
+
 import axios from 'axios';
 import api from '../../Services/Service'
 import { UserContext } from '../../context/AuthContext';
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "./HomePage.css";
+
+import { Pagination } from "swiper/modules";
 
 
 
 const HomePage = () => {
 const {userData} = useContext(UserContext)
-
-console.log("Dados");
-console.log(userData);
 
     useEffect(() => {
         // Chamar a API:
@@ -49,20 +56,33 @@ console.log(userData);
         <Container>
 
         <Title titleText={'Proximos eventos'}/>
+
         <div className='events-box'>
+        <Swiper
+        slidesPerView={ window.innerWidth >= 992 ? 3 : 1 }
+        spaceBetween={30}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Pagination]}
+        className="mySwiper"
+        >
 
         {
             nextEvents.map((e) => {
                 return(
+                <SwiperSlide>
                 <NextEvent 
                   title={e.nomeEvento}
                   description={e.descricao}
                   eventDate={e.dataEvento}
                   idEvento={e.idEvento}
                 />
+                </SwiperSlide>
                 );
             })
         }
+        </Swiper>
 
         </div>
         </Container>

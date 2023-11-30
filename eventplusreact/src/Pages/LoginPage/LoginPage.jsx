@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ImageIllustrator from "../../Components/ImageIllustrator/ImageIllustrator";
 import logo from "../../assets/images/logo-pink.svg";
 import { Input, Button } from "../../Components/FormComponents/FormComponents";
@@ -6,10 +6,18 @@ import loginImage from "../../assets/images/login.svg"
 import "./LoginPage.css";
 import api from "../../Services/Service"
 import { UserContext, userDecodeToken } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-const [user, setUser] = useState({email: "gust@admin.com", senha: "gugu12345"})
+const [user, setUser] = useState({email: "gust@admin.com", senha: ""})
 const {userData, setUserData} = useContext(UserContext) // Dados globais do usuário.
+const navigate = useNavigate();
+
+useEffect(() => {
+  if (userData.nome) {
+    navigate("/")
+  }
+}, [userData])
 
 async function handleSubmit(e) {
     e.preventDefault();
@@ -24,6 +32,7 @@ async function handleSubmit(e) {
 
             setUserData(userFullToken); // Guarda os dados decodificados (Payload).
             localStorage.setItem("token", JSON.stringify(userFullToken))
+            navigate("/"); // Direciona o usuario para a Home.
 
         } catch (error) { // 401 - BadRequest.
             alert("Usuário inválido. Email ou senha incorretos!")
