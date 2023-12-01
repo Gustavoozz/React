@@ -13,7 +13,6 @@ const PerfilUsuario = () => {
 
         // Resetar os dados do usuario.
         setUserData({});
-
         navigate("/")
     }
 

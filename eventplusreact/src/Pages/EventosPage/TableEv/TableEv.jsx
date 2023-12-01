@@ -1,81 +1,101 @@
-import React from 'react';
-import './TableEv.css';
-import { dateFormatDbToView } from '../../../Utils/stringFunction'
+import React from "react";
+import "./TableEv.css";
+import editPen from "../../../assets/images/edit-pen.svg";
 
-// Import dos ícones:
-import editPen from '../../../assets/images/edit-pen.svg'
-import trashDelete from '../../../assets/images/trash-delete.svg'
+import trashDelete from "../../../assets/images/trash-delete.svg";
+import { dateFormateDbToView } from "../../../Utils/stringFunction";
+import "react-tooltip/dist/react-tooltip.css";
 
-const Table = ({ dados, fnDelete, fnUpdate }) => {
-    return (
-        <table className='table-data'>
-            <thead className="table-data__head">
-            <tr className="table-data__head-row">
-                <th className="table-data__head-title table-data__head-title--big">Evento</th>
-                <th className="table-data__head-title table-data__head-title--big">Descrição</th>
-                <th className="table-data__head-title table-data__head-title--big">Tipo de Evento</th>
-                <th className="table-data__head-title table-data__head-title--big">Data</th>
-                <th className="table-data__head-title table-data__head-title--big">Instituição</th>
-                <th className="table-data__head-title table-data__head-title--little">Editar</th>
-                <th className="table-data__head-title table-data__head-title--little">Deletar</th>
+import { Tooltip } from "react-tooltip";
+
+
+const Table = ({ dados, fnDelete = null, fnUpdate = null }) => {
+
+  return (
+    <table className="table-data">
+      <thead className="table-data__head">
+        <tr className="table-data__head-row">
+          <th className="table-data__head-title table-data__head-title--big">
+            Evento
+          </th>
+          <th className="table-data__head-title table-data__head-title--big">
+            Descrição
+          </th>
+          <th className="table-data__head-title table-data__head-title--big">
+            Tipo Evento
+          </th>
+          <th className="table-data__head-title table-data__head-title--big">
+            Data
+          </th>
+          <th className="table-data__head-title table-data__head-title--little">
+            Editar
+          </th>
+          <th className="table-data__head-title table-data__head-title--little">
+            Deletar
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {dados.map((tp) => {
+          return (
+            <tr className="table-data__head-row" key={tp.idEvento}>
+              <td className="table-data__data table-data__data--big">
+                {tp.nomeEvento}
+              </td>
+              <td
+                className="table-data__data table-data__data--big table-data__data--handover"
+                data-tooltip-id="description-tooltip"
+                data-tooltip-content={tp.descricao}
+                data-tooltip-place="top"
+              >
+                {tp.descricao.substr(0, 15)} ...
+                <Tooltip
+                  id="description-tooltip"
+                  className="custom-tootip"
+                />
+              </td>
+              <td className="table-data__data table-data__data--big">
+                {tp.tiposEvento.titulo}
+              </td>
+              <td className="table-data__data table-data__data--big">
+                {dateFormateDbToView(tp.dataEvento)}
+              </td>
+
+              <td className="table-data__data table-data__data--little">
+                <img
+                  className="table-data__icon"
+                  idevento={tp.idEvento}
+                  src={editPen}
+                  alt=""
+                  onClick={(e) =>
+                    
+                    fnUpdate({
+                      idEvento: tp.idEvento,
+                      nomeEvento: tp.nomeEvento,
+                      dataEvento: tp.dataEvento,
+                      descricao: tp.descricao,
+                      idInstituicao: tp.idInstituicao, 
+                      idTipoEvento: tp.idTipoEvento
+                    })
+                  }
+                />
+              </td>
+
+              <td className="table-data__data table-data__data--little">
+                <img
+                  className="table-data__icon"
+                  idevento={tp.idEvento}
+                  src={trashDelete}
+                  alt=""
+                  onClick={(e) => fnDelete(e.target.getAttribute("idevento"))}
+                />
+              </td>
             </tr>
-        </thead>
-   
-<tbody>
-
-{dados.map((e) => {
-return (
-  
-  <tr className="table-data__head-row" key={e.idEvento}>
-    <td className="table-data__data table-data__data--big">
-      {e.nomeEvento}
-    </td>
-    <td className="table-data__data table-data__data--big">
-      {e.descricao}
-    </td>
-    <td className="table-data__data table-data__data--big">
-      {e.tiposEvento.titulo}
-    </td>
-    <td className="table-data__data table-data__data--big">
-      {dateFormatDbToView(e.dataEvento)}
-    </td>
-    <td className="table-data__data table-data__data--big">
-      {e.instituicao.nomeFantasia}
-    </td>
-
-
-    <td className="table-data__data table-data__data--little">
-      <img 
-
-      className="table-data__icon" 
-      src={editPen} 
-      alt="" 
-      onClick={(e) => {
-        fnUpdate(e.idEvento)
-      }}
-      />
-    </td>
-
-    <td className="table-data__data table-data__data--little">
-      <img 
-      idtipoevento={e.idTipoEvento}
-      className="table-data__icon" 
-      src={trashDelete} 
-      alt="" 
-      onClick={() => {
-        fnDelete(e);
-    }}/>
-    </td>
-  </tr>
-);
-
-})}
-
-</tbody>
+          );
+        })}
+      </tbody>
     </table>
-            
-
-    );
+  );
 };
 
 export default Table;
