@@ -101,8 +101,7 @@ async function handleSubmit(e) {
               id="btn-login"
               name="btn-login"
               type="submit"
-              additionalClass="frm-login__button"
-              
+              additionalClass="frm-login__button"             
             />
           </form>
         </div>
