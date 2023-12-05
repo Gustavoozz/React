@@ -11,6 +11,7 @@ import api, { eventsResource, eventsTypeResource } from "../../Services/Service"
 
 import "./EventosAlunoPage.css";
 import { UserContext } from "../../context/AuthContext";
+import { clear } from "@testing-library/user-event/dist/clear";
 
 const EventosAlunoPage = () => {
   // state do menu mobile
@@ -30,17 +31,29 @@ const EventosAlunoPage = () => {
   const { userData, setUserData } = useContext(UserContext);
 
   useEffect(() => {
+
     async function loadEventsType() {
-       
+      setShowSpinner(true);
           try { // Todos os eventos:
-             if ((tipoEvento === "1")) {
+             if (tipoEvento === "1") {
+
             const retorno = await api.get(eventsResource);
+            const retornoEventos = await api.get(`/PresencasEvento/ListarMinhas/${userData.userId}`)
+
+            const dadosMarcados = verificaPresenca(retorno.data, retornoEventos.data);
+            console.clear();
+            console.log("Dados marcados");
+            console.log(dadosMarcados);
+
             setEventos(retorno.data);
+
             } else { // Meus eventos:
+
                 let arrEventos = [];
-                const retornoEventos = await api.get(`PresencasEvento/ListarMinhas/${userData.userId}`)
+                const retornoEventos = await api.get(`/PresencasEvento/ListarMinhas/${userData.userId}`)
+
                 retornoEventos.data.forEach((element) => {
-                    arrEventos.push(element.evento)
+                    arrEventos.push({...element.evento, situacao : element.situacao})
                 });
 
                 setEventos(arrEventos);
@@ -49,17 +62,32 @@ const EventosAlunoPage = () => {
             } catch (error) {
                 console.log("Erro!");
             }
-
         
       }
-      setShowSpinner(true);
       setEventos([]);
   
       loadEventsType();
       setShowSpinner(false);
-    }, [tipoEvento]);
+    }, [tipoEvento, userData.userId]);
 
+    const verificaPresenca = (arrAllEvents, eventsUser) => { // Para cada evento (todos).
 
+        // Verifica se o aluno está participando do evento atual (x).
+        for (let x = 0; x < arrAllEvents.length; x++) {
+        
+        for (let i = 0; i < eventsUser.length; i++) { 
+
+         // Verifica em meus eventos.
+         if (arrAllEvents[x].idEvento === eventsUser[i].evento.idEvento) {
+
+           arrAllEvents[x].situacao = true;
+           break;
+         }          
+        }
+      }
+      // Devolve o array modificado.
+      return arrAllEvents;
+}
 
 
   // toggle meus eventos ou todos os eventos
