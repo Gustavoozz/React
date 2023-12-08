@@ -29,7 +29,6 @@ export default function EventosPaage(props) {
   const [instituicao, setInstituicao] = useState();
   const [frmEditData, setFrmEditData] = useState({}); 
 
-
   const [showSpinner, setShowSpinner] = useState(false);
   const [frmEdit, setFrmEdit] = useState(false);
   const [notifyUser, setNotifyUser] = useState({}); 
@@ -232,7 +231,9 @@ export default function EventosPaage(props) {
       setDescricaoEvento("");
       setTipoEvento("");
       setDFataEvento("");
+
     } catch (error) {
+
       setNotifyUser({
         titleNote: "Erro",
         textNote: `Deu ruim ao cadastrar!!: ${error}`,

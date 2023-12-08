@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import trashDelete from "../../assets/images/trash-delete-red.png";
 
 import { Button, Input } from "../FormComponents/FormComponents";
@@ -10,9 +10,14 @@ const Modal = ({
   userId = null,
   showHideModal = false,
   fnDelete = null,
-  fnNewCommentary = null
+  fnGet = null,
+  fnPost = null
 
 }) => {
+  
+  useEffect(() => {
+    fnGet();
+  }, []);
 
   return (
     <div className="modal">
@@ -45,7 +50,7 @@ const Modal = ({
         <Button
           textButton="Comentar"
           additionalClass="comentary__button"
-          manipulationFunction={fnNewCommentary}
+          manipulationFunction={fnPost}
         />
       </article>
     </div>

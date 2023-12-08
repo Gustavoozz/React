@@ -60,7 +60,7 @@ const {userData} = useContext(UserContext)
         <div className='events-box'>
         <Swiper
         slidesPerView={ window.innerWidth >= 992 ? 3 : 1 }
-        spaceBetween={30}
+        spaceBetween={20}
         pagination={{
           clickable: true,
         }}
