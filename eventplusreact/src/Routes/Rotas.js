@@ -7,9 +7,12 @@ import Footer from '../Components/Footer/Footer';
 import HomePage from '../Pages/HomePage/HomePage';
 import TipoEventosPage from '../Pages/TipoEventosPage/TipoEventosPage';
 import EventosPage from '../Pages/EventosPage/EventosPage';
+
 import LoginPage from '../Pages/LoginPage/LoginPage';
 import EventosAlunoPage from '../Pages/EventosAlunoPage/EventosAlunoPage';
 import { PrivateRoute } from './PrivateRoute';
+
+import DetalhesEventoPage from '../Pages/DetalhesEventoPage/DetalhesEventoPage';
 
 
 const Rotas = () => {
@@ -37,6 +40,13 @@ const Rotas = () => {
                 element= {
                 <PrivateRoute redirectTo="/">
                 <EventosAlunoPage />
+                </PrivateRoute>}  
+                />
+               
+               <Route path='/detalhes-evento'
+                element= {
+                <PrivateRoute redirectTo="/">
+                <DetalhesEventoPage />
                 </PrivateRoute>}  
                 />
 

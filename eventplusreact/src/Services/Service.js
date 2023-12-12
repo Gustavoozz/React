@@ -12,9 +12,13 @@ export const institutionResource = '/Instituicao';
 
 export const loginResource = '/Login';
 
-const apiPort = "7118";
+export const commentaryEventResource = '/ComentariosEvento';
+
+export const presencesEventResource = '/PresencasEvento';
+
+// const apiPort = "7118";
 // const localApi = `https://localhost:${apiPort}/api`
-const externalApi =  "https://eventapiwebgustavo.azurewebsites.net";
+const externalApi =  `https://eventapiwebgustavo.azurewebsites.net/api`;
 
 const api = axios.create({
     baseURL : externalApi
