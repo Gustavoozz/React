@@ -19,14 +19,10 @@ const TableDv = ({ dados, description, descricaoEvento, fnConnect = null, fnShow
             Evento
           </th>
           <th className="tbal-data__head-title tbal-data__head-title--big">
-            Data
+           Descrição
           </th>
-          <th className="tbal-data__head-title tbal-data__head-title--big"
-           data-tooltip-id={descricaoEvento}
-           data-tooltip-content={description}
-           data-tooltip-place="top"
-          >
-            Descrição
+          <th className="tbal-data__head-title tbal-data__head-title--big">
+            Data
           </th>
           <th className="tbal-data__head-title tbal-data__head-title--big">
             Tipo de Evento
@@ -38,27 +34,34 @@ const TableDv = ({ dados, description, descricaoEvento, fnConnect = null, fnShow
         </tr>
       </thead>
       <tbody>
-        {dados.map((e) => {
+        {dados.map((tp) => {
           return (
-            <tr className="tbal-data__head-row" key={Math.random()}>
-              <td className="tbal-data__data tbal-data__data--big">
-                {e.nomeEvento}
-              </td>
+            <tr className="table-data__head-row" key={tp.idEvento}>
+            <td className="table-data__data table-data__data--big">
+              {tp.nomeEvento}
+            </td>
+            <td
+              className="table-data__data table-data__data--big table-data__data--handover"
+              data-tooltip-id="description-tooltip"
+              data-tooltip-content={tp.descricao}
+              data-tooltip-place="top"
+            >
+              {tp.descricao.substr(0, 15)} ...
+              <Tooltip
+                id="description-tooltip"
+                className="custom-tootip"
+              />
+            </td>
+            <td className="table-data__data table-data__data--big">
+              {dateFormateDbToView(tp.dataEvento)}
+            </td>
+            <td className="table-data__data table-data__data--big">
+              {tp.tiposEvento.titulo}
+            </td>
+            <td className="table-data__data table-data__data--big">
+              {tp.comentariosEvento}
+            </td>
 
-              <td className="tbal-data__data tbal-data__data--big tbal-data__btn-actions">
-                {/* {e.dataEvento} */}
-                {dateFormateDbToView(e.dataEvento)}
-              </td>
-
-              <td className="tbal-data__data tbal-data__data--big tbal-data__btn-actions">
-                {e.descricao}
-                <Tooltip id={descricaoEvento} className='tooltip'/>
-                {/* {description.substr(0, 16)}... */}
-              </td>
-
-              <td className="tbal-data__data tbal-data__data--big tbal-data__btn-actions">
-                {e.tipoEvento}
-              </td>
 
              {/* <td className="tbal-data__data tbal-data__data--big tbal-data__btn-actions">
                 {new Date(e.dataEvento) < Date.now() ? (

@@ -41,18 +41,6 @@ const DetalhesEventoPage = () => {
 
   useEffect(() => {
     loadEventsType();
-
-    async function getComents() {
-        try {
-
-             const getAllComents = await api.get(commentaryEventResource);
-             const getComentsIa = await api.get(`${commentaryEventResource}/${userData.userId}`);
-
-        } catch (error) {
-            
-        }
-       
-    };
   }, [tipoEvento, userData.userId]); //
 
   async function loadEventsType() {
@@ -73,16 +61,7 @@ const DetalhesEventoPage = () => {
 
         setEventos(eventosMarcados);
 
-        // console.clear();
-
-        // console.log("TODOS OS EVENTOS");
-        // console.log(todosEventos.data);
-
-        // console.log("MEUS EVENTOS");
-        // console.log(meusEventos.data);
-
-        // console.log("EVENTOS MARCADOSSSS:");
-        // console.log(eventosMarcados);
+  
       } catch (error) {
         //colocar o notification
         console.log("Erro na API");

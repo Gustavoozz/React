@@ -16,6 +16,10 @@ export const commentaryEventResource = '/ComentariosEvento';
 
 export const presencesEventResource = '/PresencasEvento';
 
+export const eventosPassadosResource = "/Evento/ListarAnteriores";
+
+
+
 // const apiPort = "7118";
 // const localApi = `https://localhost:${apiPort}/api`
 const externalApi =  `https://eventapiwebgustavo.azurewebsites.net/api`;

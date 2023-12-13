@@ -11,7 +11,7 @@ import NextEvent from '../../Components/NextEvent/NextEvent';
 import Container from '../../Components/Container/Container'
 
 import axios from 'axios';
-import api from '../../Services/Service'
+import api, { nextEventResource, eventosPassadosResource } from '../../Services/Service'
 import { UserContext } from '../../context/AuthContext';
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -21,33 +21,46 @@ import "./HomePage.css";
 
 import { Pagination } from "swiper/modules";
 
+import EventosPassados from "../../Components/EventosPassados/EventosPassados"
+import { Link } from 'react-router-dom';
+
 
 
 const HomePage = () => {
 const {userData} = useContext(UserContext)
 
-    useEffect(() => {
-        // Chamar a API:
-        async function getProximosEventos() {
-            try {
-            const promise = await api.get("/Evento/ListarProximos"); 
-            
-            
-            setNextEvents(promise.data)
+useEffect(()=> {
+  async function  getNextEvents() {
+    try {
+      const promise = await api.get(nextEventResource)
+      const dados = await promise.data;
 
-            } catch (error) {
-              alert('Erro!')  
-            }
-        }
-        getProximosEventos();
-        console.log("A home foi gerada.")
-    }, []);
+      setNextEvents(dados); 
+    } catch (error) {
+      alert("Deu ruim na api!")
+    }   
+  }
 
+  // async function getEventosPassados() {
+  //   try {
+  //     const promise = await api.get(eventosPassadosResource)
+  //     const dados = await promise.data;
+
+  //     setEventosPassados(dados);
+  //   } catch (error) {
+  //     alert("Erro")
+  //   }
+  // }
+   getNextEvents(); 
+  //  getEventosPassados();
+}, [])
 
     // Fake mock - API mocada:
     const [nextEvents, setNextEvents] = useState([]);
+    const [eventosPassados, setEventosPassados] = useState([]);
 
     return (
+      
        <MainContent>
         <Banner />
         
@@ -79,17 +92,40 @@ const {userData} = useContext(UserContext)
                   idEvento={e.idEvento}
                 />
                 </SwiperSlide>
+                
                 );
+
             })
         }
-        </Swiper>
-
+        </Swiper> 
         </div>
         </Container>
+        
+        <Container>
+                <Title titleText={"Eventos passados"}/>
+                <div className="events-box2">
+      
+                 {
+                  eventosPassados.map((e) => {
+                    return (
+                    <SwiperSlide>
+                    <EventosPassados
+                    key={e.idEvento}
+                    title={e.nomeEvento}
+                    description={e.descricao}
+                    eventDate={e.dataEvento}
+                    idEvent={e.idEvento}
+                    />
+                    </SwiperSlide>
+                    );
+                  })
+                 }
+      
+                </div>
+              </Container>
         </section>
 
         <VisionSection />
-        
         <ContactSection />
        </MainContent>
     );

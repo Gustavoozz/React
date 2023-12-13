@@ -258,7 +258,7 @@ const EventosAlunoPage = () => {
 
         if (retorno.status === 201) {
           loadEventsType();
-          alert("Presença confirmada, parabéns!")
+          // alert("Presença confirmada, parabéns!")
         }
 
       } catch (error) {
@@ -272,7 +272,7 @@ const EventosAlunoPage = () => {
     const retornoDelete = await api.delete("/PresencasEvento/" + idPresencaEvento);
     if (retornoDelete.status === 204) {
       loadEventsType();
-      alert("Desconectado do evento.")
+      // alert("Desconectado do evento.")
     }
   }
 
