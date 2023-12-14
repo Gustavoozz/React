@@ -1,18 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import './HomePage.css'
-import Title from '../../Components/Title/Title';
+import React, { useEffect, useState } from "react";
+import "./HomePage.css";
 
-import MainContent from '../../Components/MainContent/MainContent';
-import Banner from '../../Components/Banner/Banner'
-import VisionSection from '../../Components/VisionSection/VisionSection';
-
-import ContactSection from '../../Components/ContactSection/ContactSection';
-import NextEvent from '../../Components/NextEvent/NextEvent';
-import Container from '../../Components/Container/Container'
-
-import axios from 'axios';
-import api, { nextEventResource, eventosPassadosResource } from '../../Services/Service'
-import { UserContext } from '../../context/AuthContext';
+import Banner from "../../Components/Banner/Banner";
+import MainContent from "../../Components/MainContent/MainContent";
+import VisionSection from "../../Components/VisionSection/VisionSection";
+import ContactSection from "../../Components/ContactSection/ContactSection";
+import Title from "../../Components/Title/Title";
+import NextEvent, { DetalhesEvents } from "../../Components/NextEvent/NextEvent";
+import Container from "../../Components/Container/Container";
+import api, { eventsResource } from "../../Services/Service";
+import Notification from "../../Components/Notification/Notification";
+import { nextEventResource } from "../../Services/Service";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -21,57 +19,70 @@ import "./HomePage.css";
 
 import { Pagination } from "swiper/modules";
 
-import EventosPassados from "../../Components/EventosPassados/EventosPassados"
-import { Link } from 'react-router-dom';
-
-
-
 const HomePage = () => {
-const {userData} = useContext(UserContext)
+  const [nextEvents, setNextEvents] = useState([]);
+  const [notifyUser, setNotifyUser] = useState(); //Componente Notification
+  const [fullEvents, setFullEvents] = useState([]);
 
-useEffect(()=> {
-  async function  getNextEvents() {
-    try {
-      const promise = await api.get(nextEventResource)
-      const dados = await promise.data;
+  function dataExpirada(dataEvento) {
+    const dataAtualMod = new Date()
+    const dataEventoMod = new Date(dataEvento);
 
-      setNextEvents(dados); 
-    } catch (error) {
-      alert("Deu ruim na api!")
-    }   
-  }
+    return dataEventoMod <= dataAtualMod}
 
-  // async function getEventosPassados() {
-  //   try {
-  //     const promise = await api.get(eventosPassadosResource)
-  //     const dados = await promise.data;
-
-  //     setEventosPassados(dados);
-  //   } catch (error) {
-  //     alert("Erro")
-  //   }
-  // }
-   getNextEvents(); 
-  //  getEventosPassados();
-}, [])
-
-    // Fake mock - API mocada:
-    const [nextEvents, setNextEvents] = useState([]);
-    const [eventosPassados, setEventosPassados] = useState([]);
-
-    return (
-      
-       <MainContent>
-        <Banner />
+    async function getFullEventos() {
+      try {
+        const promise = await api.get(eventsResource);
+        console.log(promise.data);
+       
+        setFullEvents(promise.data);
         
-        {/* NEXT EVENTS */}
-        <section className='proximos-eventos'>
+
+     
+      } catch (error) {
+        console.log("Deu ruim na API");
+      }
+    }  
+
+  // roda somente na inicialização do componente
+  useEffect(() => {
+    async function getNextEvents() {
+      try {
+        const promise = await api.get(nextEventResource);
+        const dados = await promise.data;
+        // console.log(dados);
+        setNextEvents(dados); //atualiza o state
+
+      } catch (error) {
+        console.log("não trouxe os próximos eventos, verifique lá!");
+        // setNotifyUser({
+        //   titleNote: "Erro",
+        //   textNote: `Não foi possível carregar os próximos eventos. Verifique a sua conexão com a internet`,
+        //   imgIcon: "danger",
+        //   imgAlt:
+        //   "Imagem de ilustração de erro. Rapaz segurando um balão com símbolo x.",
+        //   showMessage: true,
+        // });
+      }
+    }
+
+    getNextEvents();
+    getFullEventos() //chama a função
+  }, []);
+
+  return (
+    
+    <MainContent>
+      {<Notification {...notifyUser} setNotifyUser={setNotifyUser} />}
+      <Banner />
+
+      {/* PRÓXIMOS EVENTOS */}
+      <section className="proximos-eventos">
         <Container>
 
-        <Title titleText={'Proximos eventos'}/>
-
-        <div className='events-box'>
-        <Swiper
+          <Title titleText={"Próximos Eventos"} />
+          <div className="events-box">
+          <Swiper
         slidesPerView={ window.innerWidth >= 992 ? 3 : 1 }
         spaceBetween={20}
         pagination={{
@@ -81,54 +92,61 @@ useEffect(()=> {
         className="mySwiper"
         >
 
-        {
-            nextEvents.map((e) => {
-                return(
+            {nextEvents.map((e) => {
+              return (
                 <SwiperSlide>
-                <NextEvent 
+                <NextEvent
+                  key={e.idEvento}
                   title={e.nomeEvento}
                   description={e.descricao}
                   eventDate={e.dataEvento}
                   idEvento={e.idEvento}
                 />
-                </SwiperSlide>
-                
-                );
+                 </SwiperSlide>
+              );
+            })}
+                </Swiper> 
+          </div>
 
-            })
-        }
-        </Swiper> 
-        </div>
-        </Container>
-        
-        <Container>
-                <Title titleText={"Eventos passados"}/>
-                <div className="events-box2">
-      
-                 {
-                  eventosPassados.map((e) => {
-                    return (
-                    <SwiperSlide>
-                    <EventosPassados
-                    key={e.idEvento}
+
+          <Title titleText={"All Events"} />
+            <div className="events-box">
+            <Swiper
+        slidesPerView={ window.innerWidth >= 992 ? 3 : 1 }
+        spaceBetween={20}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Pagination]}
+        className="mySwiper"
+        >
+              {fullEvents.map((e) => {
+                return (
+                  <SwiperSlide>
+                  <DetalhesEvents
+                    idEvento={e.idEvento}
                     title={e.nomeEvento}
                     description={e.descricao}
                     eventDate={e.dataEvento}
-                    idEvent={e.idEvento}
-                    />
-                    </SwiperSlide>
-                    );
-                  })
-                 }
-      
-                </div>
-              </Container>
-        </section>
+                    classAdd={dataExpirada(e.dataEvento)}
+                    text={"Visualizar"}
+                  />
+                   </SwiperSlide>
+                );
+              })}
+              </Swiper> 
+              
+            </div>
+           
+          
 
-        <VisionSection />
-        <ContactSection />
-       </MainContent>
-    );
+        </Container>
+      </section>
+
+      <VisionSection />
+      <ContactSection />
+    </MainContent>
+  );
 };
 
 export default HomePage;

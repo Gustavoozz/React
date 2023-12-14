@@ -1,79 +1,77 @@
-import React, { useState } from 'react';
-import './NextEvent.css'
-import { dateFormatDbToView } from '../../Utils/stringFunction'; 
-import { Tooltip } from 'react-tooltip'
 
-import 'swiper/swiper-bundle.css';
-import 'swiper/css';
-import 'swiper/css/navigation';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./NextEvent.css";
 
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import { register } from 'swiper/element/bundle'
-    
+import { Tooltip } from "react-tooltip";
 
-const NextEvent = ( { title, description, eventDate, idEvento } ) => {
+// importar a função lá do arquivo stringFunction (destructuring)
+import { dateFormatDbToView } from "../../Utils/stringFunction";
 
+const NextEvent = ({ title, description, eventDate, idEvent}) => {
+  function conectar(idEvent) {
+    // dá pra usar a prop idEvent? testar
+    alert(`Chamar o recurso para conectar: ${idEvent}`);
+  }
+  return (
+    <article className="event-card">
+      <h2 className="event-card__title">{title}</h2>
 
-    function conectar(idEvento) {
-
+      <p
+        className="event-card__description"
         
-        alert(`Conectado ao evento: ${idEvento}`)
-    }
+        data-tooltip-id={idEvent}
+        data-tooltip-content={description}
+        data-tooltip-place="top"
+      >
+        <Tooltip id={idEvent} className="tooltip" />
+        {description.substr(0, 15)} ...
+      </p>
 
-    return (
-                
-        <article className='event-card'>
-            <h2 className='event-card__title'>{title}</h2>
+      <p className="event-card__description">
+        {/* aplicar a função pra converter a data */}
+        {dateFormatDbToView(eventDate)}
+      </p>
 
-            {/* Substr: Limitar os caractéres. */}
-            <p 
-            className='event-card__description'
-            data-tooltip-id={idEvento}
-            data-tooltip-content={description}
-            data-tooltip-place="top"
-            >
-            <Tooltip id={idEvento} className='tooltip'/>
-            {description.substr(0, 16)}...
-            </p>
-
-            <p className='event-card__description'>{new Date(eventDate).toLocaleDateString()}</p>
-            {/* {dateFormatDbToView(eventDate)} */}
-
-            <a onClick={() => {conectar(idEvento)}} className='event-card__connect-link' href="">Conectar</a>
-           
-        </article>
-    );
+      <a
+        onClick={() => {
+          conectar(idEvent);
+        }}
+        className="event-card__connect-link"
+      >
+        Conectar
+      </a>
+    </article>
+  );
 };
 
 export default NextEvent;
 
-export const DetalhesEvents = ({ title, description, eventDate, idEvento }) => {
-    function conectar(idEvento) {
+export const DetalhesEvents = ({ title, description, eventDate, idEvent, text, additionalClass}) => {
+  return (
+    <article className={`event-card ${additionalClass}`}>
+      <h2 className="event-card__title">{title}</h2>
 
-      alert(`Chamar o recurso para conectar: ${idEvento}`);
-    }
-    return (
-                
-        <article className='event-card'>
-            <h2 className='event-card__title'>{title}</h2>
+      <p
+        className="event-card__description"
+        
+        data-tooltip-id={idEvent}
+        data-tooltip-content={description}
+        data-tooltip-place="top"
+      >
+        <Tooltip id={idEvent} className="tooltip" />
+        {description.substr(0, 15)} ...
+      </p>
 
-            {/* Substr: Limitar os caractéres. */}
-            <p 
-            className='event-card__description'
-            data-tooltip-id={idEvento}
-            data-tooltip-content={description}
-            data-tooltip-place="top"
-            >
-            <Tooltip id={idEvento} className='tooltip'/>
-            {description.substr(0, 16)}...
-            </p>
+      <p className="event-card__description">
+        {/* aplicar a função pra converter a data */}
+        {dateFormatDbToView(eventDate)}
+      </p>
+      
+      <Link to={`/detalhes-eventos/${idEvent}`} className="event-card__connect-link">
+          {text}
+        </Link>
 
-            <p className='event-card__description'>{new Date(eventDate).toLocaleDateString()}</p>
-            {/* {dateFormatDbToView(eventDate)} */}
-
-            <a onClick={() => {conectar(idEvento)}} className='event-card__connect-link' href="">Conectar</a>
-           
-        </article>
-    );
+    </article>
+  );
 };
